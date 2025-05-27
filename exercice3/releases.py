@@ -1,0 +1,19 @@
+from datetime import datetime
+
+from db import connection_to_database
+
+
+def add_releases(version, tag_git):
+    date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with connection_to_database() as connection:
+        connection.start_transaction()
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                               INSERT INTO releases (version, tag_git, date_creation)
+                               values (%s, %s, %s)
+                               """, (version, tag_git, date))
+            connection.commit()
+        except:
+            print("Une erreur grave lors de ajout")
+            connection.rollback()
