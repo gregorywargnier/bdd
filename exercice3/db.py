@@ -39,4 +39,3 @@ def create_tables():
                 FOREIGN KEY (id_release) REFERENCES releases(id),
                 FOREIGN KEY (id_env) REFERENCES environnements(id)                
             );""")
-    create_tables()
